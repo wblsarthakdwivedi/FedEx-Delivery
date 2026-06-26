@@ -1,0 +1,8 @@
+*.pyc
+__pycache__/
+*.log
+*.zip
+.env
+.vscode/
+.idea/
+node_modules/

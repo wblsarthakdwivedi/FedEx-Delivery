@@ -26,17 +26,19 @@
             "security/ir.model.access.csv",
             "views/delivery_method_credentials.xml",
             "wizard/choose_delivery_carrier_view.xml",
-            # "views/dpd_shipping.xml",
+            "views/website_delivery_template.xml",
             # "views/dpd_label_view.xml",
             # "views/dpd_menus.xml",
     ],
     'assets': {
         'web.assets_frontend_lazy': [
 
+            "wbl_fedex_delivery/static/src/fedex_checkout.js",
+
         ],
 
         'web.assets_backend': [
-            # "wbl_dpd_shipping_integration/static/src/js/dpd_dashboard.js",
+            # "wbl_fedex_delivery/static/src/fedex_checkout.js",
             # "wbl_dpd_shipping_integration/static/src/xml/dpd_dashboard.xml",
             # "wbl_dpd_shipping_integration/static/src/css/dpd_dashboard.css",
         ],

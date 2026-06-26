@@ -24,6 +24,13 @@
                         <field name="currency_id"/>
                         <field name="delivery_days"/>
 
+
+                        <button name="action_select_rate"
+                                type="object"
+                                string="Select"
+                                class="btn-primary"/>
+
+
                     </list>
 
                 </field>

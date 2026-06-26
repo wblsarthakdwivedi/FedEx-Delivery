@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="fedex_delivery_method"
+              inherit_id="website_sale.delivery_method">
+
+        <xpath expr="//label[@name='o_delivery_method_label']"
+               position="attributes">
+            <attribute name="t-att-data-carrier-id">dm.id</attribute>
+        </xpath>
+
+        <xpath expr="//label[@name='o_delivery_method_label']/.." position="after">
+
+            <div class="fedex_rates_container mt-2"
+                 t-att-data-carrier-id="dm.id">
+            </div>
+
+        </xpath>
+
+    </template>
+
+
+</odoo>

@@ -46,7 +46,6 @@ class DeliveryCarrier(models.Model):
         for c in self:
             c.prod_environment = not c.prod_environment
 
-
     @api.depends('prod_environment')
     def _compute_fedex_base_url(self):
         for record in self:
@@ -54,7 +53,6 @@ class DeliveryCarrier(models.Model):
                 record.fedex_base_url = "https://apis.fedex.com"
             else:
                 record.fedex_base_url = "https://apis-sandbox.fedex.com"
-
 
     def fedex_auth_token(self):
 
@@ -86,7 +84,6 @@ class DeliveryCarrier(models.Model):
             if not token:
                 raise UserError("FedEx token not received from API.")
 
-
             _logger.info("FedEx token generated successfully")
 
             return token
@@ -96,5 +93,24 @@ class DeliveryCarrier(models.Model):
             raise UserError(f"FedEx Authentication Failed: {e}")
 
 
+    def fedex_rate_shipment(self, order):
+        delivery_line = order.order_line.filtered(lambda l: l.is_delivery)
+
+        return {
+            'success': True,
+            'price': delivery_line.price_unit if delivery_line else 0.0,
+            'error_message': False,
+            'warning_message': False,
+        }
+
+    def fedex_send_shipping(self, pickings):
+        result = []
 
 
+        for picking in pickings:
+            result.append({
+                "exact_price": picking.sale_id.fedex_rate_amount or 0.0,
+                "tracking_number": picking.carrier_tracking_ref or "",
+            })
+
+        return result

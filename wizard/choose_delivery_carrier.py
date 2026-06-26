@@ -16,6 +16,11 @@ class ChooseDeliveryCarrier(models.TransientModel):
         string="Available Rates",
     )
 
+    selected_rate_id = fields.Many2one(
+        "fedex.rate.line.wizard",
+        string="Selected FedEx Rate",
+    )
+
     delivery_type = fields.Selection(related='carrier_id.delivery_type')
 
     def update_price(self):
@@ -76,7 +81,7 @@ class ChooseDeliveryCarrier(models.TransientModel):
                 "requestedPackageLineItems": [
                     {
                         "weight": {
-                            "units": "KG",
+                            "units": "LB",
                             "value": weight
                         }
                     }
