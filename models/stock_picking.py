@@ -17,6 +17,12 @@ class StockPicking(models.Model):
         string="Shipping Label"
     )
 
+    package_type_id = fields.Many2one(
+        "stock.package.type",
+        string="Package Type",
+        help="Package used for this shipment."
+    )
+
     def button_validate(self):
 
         self.ensure_one()
@@ -41,6 +47,21 @@ class StockPicking(models.Model):
             "Content-Type": "application/json",
         }
 
+        package = self.package_type_id
+
+        if not package:
+            raise UserError("Please select a Package Type.")
+
+        if not package.fedex_packaging_type:
+            raise UserError(
+                "Please configure the FedEx Packaging Type on the selected Package Type."
+            )
+
+        if not package.packaging_length or not package.width or not package.height:
+            raise UserError(
+                "Please configure the package dimensions."
+            )
+
         sender = self.company_id.partner_id
         recipient = self.partner_id
 
@@ -49,7 +70,7 @@ class StockPicking(models.Model):
             move.product_id.weight * move.quantity
             for move in self.move_ids
         )
-        weight = max(weight, 0.1)
+        weight += package.base_weight or 0.1
 
         payload = {
             "labelResponseOptions": "LABEL",
@@ -64,7 +85,7 @@ class StockPicking(models.Model):
                 # Selected by customer during rate request
                 "serviceType": self.sale_id.fedex_service_code,
 
-                "packagingType": "YOUR_PACKAGING",
+                "packagingType": package.fedex_packaging_type,
 
                 "shippingChargesPayment": {
                     "paymentType": "SENDER",
@@ -88,7 +109,6 @@ class StockPicking(models.Model):
                         "countryCode": sender.country_id.code or "",
                     },
                 },
-
                 "recipients": [
                     {
                         "contact": {
@@ -121,6 +141,12 @@ class StockPicking(models.Model):
                             "units": "LB",
                             "value": weight,
                         },
+                        "dimensions": {
+                            "length": int(package.packaging_length),
+                            "width": int(package.width),
+                            "height": int(package.height),
+                            "units": "IN",
+                        },
                     }
                 ],
             },
@@ -152,7 +178,7 @@ class StockPicking(models.Model):
         })
 
         attachment = self.env["ir.attachment"].create({
-            "name": f"{tracking}.pdf",
+            "name": f"FedEX_{self.name}.pdf",
             "datas": encoded_label,
             "mimetype": "application/pdf",
             "res_model": "stock.picking",
@@ -169,9 +195,44 @@ class StockPicking(models.Model):
         
                 Amount : {self.sale_id.fedex_rate_amount:.2f} {self.sale_id.currency_id.name}
                 """,
-                    attachment_ids=[attachment.id],
-                )
+            attachment_ids=[attachment.id],
+        )
+
+        shipping = self.env["fedex.shipping"].create({
+            "name": f"SHIP-{self.sale_id.name or self.name}",
+            "sale_id": self.sale_id.id,
+            "picking_id": self.id,
+            "carrier_id": self.carrier_id.id,
+            "package_type_id": self.package_type_id.id,
+            "service_name": self.sale_id.fedex_service_name,
+            "service_code": self.sale_id.fedex_service_code,
+            "shipping_charge": self.sale_id.fedex_rate_amount,
+            "tracking_number": tracking,
+            "label_attachment_id": attachment.id,
+            "state": "shipped",
+        })
+
+        print("Shipping Order Created:", shipping)
 
         result = super().button_validate()
 
         return result
+
+    def open_website_url(self):
+        self.ensure_one()
+
+        if not self.carrier_tracking_ref:
+            raise UserError("No tracking number available.")
+
+        # Sandbox
+        if not self.carrier_id.prod_environment:
+            raise UserError(
+                "FedEx sandbox shipments cannot be tracked on the public FedEx website."
+            )
+
+        # Production
+        return {
+            "type": "ir.actions.act_url",
+            "url": f"https://www.fedex.com/fedextrack/?trknbr={self.carrier_tracking_ref}",
+            "target": "new",
+        }

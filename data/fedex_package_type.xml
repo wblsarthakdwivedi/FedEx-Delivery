@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="fedex_package_type_box" model="stock.package.type">
+        <field name="name">FedEx Box</field>
+        <field name="fedex_packaging_type">FEDEX_BOX</field>
+    </record>
+
+    <record id="fedex_package_type_envelope" model="stock.package.type">
+        <field name="name">FedEx Envelope</field>
+        <field name="fedex_packaging_type">FEDEX_ENVELOPE</field>
+    </record>
+
+    <record id="fedex_package_type_pak" model="stock.package.type">
+        <field name="name">FedEx Pak</field>
+        <field name="fedex_packaging_type">FEDEX_PAK</field>
+    </record>
+
+    <record id="fedex_package_type_tube" model="stock.package.type">
+        <field name="name">FedEx Tube</field>
+        <field name="fedex_packaging_type">FEDEX_TUBE</field>
+    </record>
+
+    <record id="fedex_package_type_your_packaging" model="stock.package.type">
+        <field name="name">Customer Packaging</field>
+        <field name="fedex_packaging_type">YOUR_PACKAGING</field>
+    </record>
+
+
+
+
+</odoo>
+
+

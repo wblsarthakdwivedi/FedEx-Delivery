@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_fedex_shipping_list" model="ir.ui.view">
+        <field name="name">fedex.shipping.list</field>
+        <field name="model">fedex.shipping</field>
+        <field name="arch" type="xml">
+            <list create="0" edit="0" delete="0">
+
+                <field name="name"/>
+                <field name="sale_id"/>
+                <field name="picking_id"/>
+                <field name="partner_id"/>
+                <field name="service_name"/>
+                <field name="tracking_number"/>
+                <field name="shipping_charge"/>
+                <field name="state"/>
+
+            </list>
+        </field>
+    </record>
+
+    <record id="view_fedex_shipping_form" model="ir.ui.view">
+        <field name="name">fedex.shipping.form</field>
+        <field name="model">fedex.shipping</field>
+        <field name="arch" type="xml">
+
+            <form create="0" edit="0" delete="0">
+
+                <header>
+
+                    <button name="action_open_label"
+                            type="object"
+                            string="Shipping Label"
+                            class="oe_highlight"
+                            icon="fa-file-pdf-o"/>
+
+<!--                    <button name="action_track_shipment"-->
+<!--                            type="object"-->
+<!--                            string="Track Shipment"-->
+<!--                            icon="fa-truck"/>-->
+
+                    <field name="state"
+                           widget="statusbar"/>
+
+                </header>
+
+                <sheet>
+
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+
+                    <group>
+
+                        <group>
+
+                            <field name="sale_id"/>
+
+                            <field name="picking_id"/>
+
+                            <field name="partner_id"/>
+
+                            <field name="carrier_id"/>
+
+                            <field name="package_type_id"/>
+
+                        </group>
+
+                        <group>
+
+                            <field name="service_name"/>
+
+                            <field name="service_code"/>
+
+                            <field name="tracking_number"/>
+
+                            <field name="shipment_date"/>
+
+                            <field name="shipping_charge"/>
+
+                        </group>
+
+                    </group>
+
+                    <notebook>
+
+                        <page string="Notes">
+
+                            <field name="notes"/>
+
+                        </page>
+
+                    </notebook>
+
+                </sheet>
+
+                <chatter/>
+
+            </form>
+
+        </field>
+    </record>
+
+
+</odoo>

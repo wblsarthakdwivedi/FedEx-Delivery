@@ -1,4 +1,3 @@
-console.log("FedEx JS Loaded");
 /** @odoo-module **/
 
 import { registry } from "@web/core/registry";
@@ -79,7 +78,7 @@ export class FedExCheckout extends Checkout {
         this._toggleCheckoutButton(false);
 
 
-        console.log("CLICKEDDDDD")
+
 
         container.innerHTML = `
             <div class="text-center py-3">

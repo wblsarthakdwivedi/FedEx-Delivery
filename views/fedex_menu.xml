@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+
+<!--    <record id="action_dpd_dashboard" model="ir.actions.client">-->
+<!--        <field name="name">DPD Dashboard</field>-->
+<!--        <field name="tag">dpd_dashboard</field>-->
+<!--    </record>-->
+
+
+    <record id="action_fedex_shipping" model="ir.actions.act_window">
+        <field name="name">Shipping Orders</field>
+        <field name="res_model">fedex.shipping</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_root_fedex" name="FedEx Dashboard"/>
+
+<!--    <menuitem id="menu_wbl_fedex_dashboard"-->
+<!--              name="Dashboard"-->
+<!--              parent="menu_root_fedex"-->
+<!--              action="action_fedex_dashboard"-->
+<!--              sequence="5"/>-->
+
+    <menuitem id="menu_wbl_shipping"
+              name="Delivery Methods"
+              parent="menu_root_fedex"
+              action="delivery.action_delivery_carrier_form"
+              sequence="15"/>
+
+
+    <menuitem id="menu_fedex_shipping_label"
+              name="Shipping Orders"
+              parent="menu_root_fedex"
+              action="action_fedex_shipping"
+              sequence="20"/>
+
+
+</odoo>

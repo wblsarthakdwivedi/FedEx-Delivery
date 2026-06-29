@@ -24,11 +24,13 @@
                 'stock'],
     'data': [
             "security/ir.model.access.csv",
+            "data/fedex_package_type.xml",
             "views/delivery_method_credentials.xml",
             "wizard/choose_delivery_carrier_view.xml",
             "views/website_delivery_template.xml",
-            # "views/dpd_label_view.xml",
-            # "views/dpd_menus.xml",
+            "views/delivery_order_package_view.xml",
+            "views/fedex_shipping_view.xml",
+            "views/fedex_menu.xml",
     ],
     'assets': {
         'web.assets_frontend_lazy': [

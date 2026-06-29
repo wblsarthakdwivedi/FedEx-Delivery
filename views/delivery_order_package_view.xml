@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_picking_form_fedex_package" model="ir.ui.view">
+        <field name="name">stock.picking.form.fedex.package</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="package_type_id"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="stock_package_type_form_fedex" model="ir.ui.view">
+        <field name="name">stock.package.type.form.fedex</field>
+        <field name="model">stock.package.type</field>
+        <field name="inherit_id" ref="stock.stock_package_type_form"/>
+        <field name="arch" type="xml">
+
+
+            <xpath expr="//field[@name='package_carrier_type']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//group[@name='delivery']" position="inside">
+                <field name="fedex_packaging_type"/>
+            </xpath>
+
+            <xpath expr="//field[@name='base_weight']/.." position="replace">
+                <div class="o_row" name="base_weight">
+                    <field name="base_weight"/>
+                    <span>LB</span>
+                </div>
+            </xpath>
+
+            <xpath expr="//field[@name='max_weight']/.." position="replace">
+                <div class="o_row" name="max_weight">
+                    <field name="max_weight"/>
+                    <span>LB</span>
+                </div>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="stock_package_type_list_fedex" model="ir.ui.view">
+        <field name="name">stock.package.type.list.fedex</field>
+        <field name="model">stock.package.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="fedex_packaging_type"/>
+                <field name="packaging_length"/>
+                <field name="width"/>
+                <field name="height"/>
+                <field name="base_weight"/>
+                <field name="max_weight"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_stock_package_type" model="ir.actions.act_window">
+        <field name="name">Package Types</field>
+        <field name="res_model">stock.package.type</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="stock_package_type_list_fedex"/>
+    </record>
+
+    <menuitem id="menu_stock_package_type"
+              name="Package Types"
+              parent="sale.menu_sales_config"
+              action="action_stock_package_type"
+              sequence="100"/>
+
+</odoo>

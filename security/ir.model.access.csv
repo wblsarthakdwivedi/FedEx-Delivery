@@ -3,3 +3,9 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_fedex_rate_line_wizard_public_public,fedex.rate.line.wizard public,model_fedex_rate_line_wizard,base.group_public,1,1,1,1
 access_fedex_rate_line_wizard_public_portal,fedex.rate.line.wizard public,model_fedex_rate_line_wizard,base.group_portal,1,1,1,1
 access_fedex_rate_line_wizard_public_employee,fedex.rate.line.wizard public,model_fedex_rate_line_wizard,base.group_user,1,1,1,1
+
+
+
+access_fedex_shipping_public_public,fedex.shipping public,model_fedex_shipping,base.group_public,1,1,1,1
+access_fedex_shipping_public_portal,fedex.shipping public,model_fedex_shipping,base.group_portal,1,1,1,1
+access_fedex_shipping_public_employee,fedex.shipping public,model_fedex_shipping,base.group_user,1,1,1,1
