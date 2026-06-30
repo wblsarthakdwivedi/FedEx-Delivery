@@ -9,3 +9,10 @@ access_fedex_rate_line_wizard_public_employee,fedex.rate.line.wizard public,mode
 access_fedex_shipping_public_public,fedex.shipping public,model_fedex_shipping,base.group_public,1,1,1,1
 access_fedex_shipping_public_portal,fedex.shipping public,model_fedex_shipping,base.group_portal,1,1,1,1
 access_fedex_shipping_public_employee,fedex.shipping public,model_fedex_shipping,base.group_user,1,1,1,1
+
+access_fedex_label_public_public,fedex.label public,model_fedex_label,base.group_public,1,1,1,1
+access_fedex_label_public_portal,fedex.label public,model_fedex_label,base.group_portal,1,1,1,1
+access_fedex_label_public_employee,fedex.label public,model_fedex_label,base.group_user,1,1,1,1
+
+
+

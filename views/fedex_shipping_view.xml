@@ -8,7 +8,7 @@
             <list create="0" edit="0" delete="0">
 
                 <field name="name"/>
-                <field name="sale_id"/>
+<!--                <field name="sale_id"/>-->
                 <field name="picking_id"/>
                 <field name="partner_id"/>
                 <field name="service_name"/>
@@ -29,17 +29,6 @@
 
                 <header>
 
-                    <button name="action_open_label"
-                            type="object"
-                            string="Shipping Label"
-                            class="oe_highlight"
-                            icon="fa-file-pdf-o"/>
-
-<!--                    <button name="action_track_shipment"-->
-<!--                            type="object"-->
-<!--                            string="Track Shipment"-->
-<!--                            icon="fa-truck"/>-->
-
                     <field name="state"
                            widget="statusbar"/>
 
@@ -58,7 +47,7 @@
 
                         <group>
 
-                            <field name="sale_id"/>
+<!--                            <field name="sale_id"/>-->
 
                             <field name="picking_id"/>
 
@@ -74,7 +63,7 @@
 
                             <field name="service_name"/>
 
-                            <field name="service_code"/>
+<!--                            <field name="service_code"/>-->
 
                             <field name="tracking_number"/>
 

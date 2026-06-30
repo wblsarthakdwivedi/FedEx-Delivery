@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_fedex_label_list" model="ir.ui.view">
+        <field name="name">fedex.label.list</field>
+        <field name="model">fedex.label</field>
+        <field name="arch" type="xml">
+            <list create="0" edit="0" delete="0">
+                <field name="picking_id"/>
+                <field name="tracking_number"/>
+                <field name="service_type"/>
+                <field name="sale_ids"/>
+                <field name="attachment_id"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="view_fedex_label_form" model="ir.ui.view">
+        <field name="name">fedex.label.form</field>
+        <field name="model">fedex.label</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0" delete="0">
+                <header>
+
+
+                    <button name="action_open_label"
+                            type="object"
+                            string="Shipping Label"
+                            class="oe_highlight"
+                            icon="fa-file-pdf-o"/>
+
+
+                </header>
+                <sheet>
+
+                    <group>
+                        <field name="picking_id"/>
+                        <field name="tracking_number"/>
+                        <field name="service_type"/>
+                        <field name="sale_ids"/>
+                        <field name="attachment_id"/>
+                    </group>
+
+                    <notebook>
+
+                        <page string="API Response">
+                            <field name="shipment_response" nolabel="1"/>
+                        </page>
+
+                    </notebook>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- FEDEX LABEL KANBAN -->
+    <record id="view_fedex_label_kanban_kpi" model="ir.ui.view">
+        <field name="name">fedex.label.kanban.kpi</field>
+        <field name="model">fedex.label</field>
+        <field name="arch" type="xml">
+            <kanban create="0"
+                    edit="0"
+                    delete="0"
+                    class="fedex_kanban_clean"
+                    default_order="create_date desc">
+
+                <templates>
+
+                    <t t-name="card">
+
+                        <div style="
+                        background:#ffffff;
+                        border-radius:26px;
+                        padding:16px;
+                        box-shadow:0 8px 22px rgba(0,0,0,0.10);
+                        width:100%;
+                    ">
+
+                            <!-- Tracking -->
+                            <div class="mb-2">
+                                <div class="text-muted small">
+                                    Tracking Number
+                                </div>
+
+                                <div class="fw-bold text-dark">
+                                    <i class="fa fa-barcode me-1 text-primary"/>
+                                    <field name="tracking_number"/>
+                                </div>
+                            </div>
+
+                            <!-- Delivery Order -->
+                            <div class="small text-muted mb-1">
+                                <i class="fa fa-truck me-1"/>
+                                <field name="picking_id"/>
+                            </div>
+
+                            <!-- Sale Order -->
+                            <div class="small text-muted mb-3">
+                                <i class="fa fa-shopping-cart me-1"/>
+                                <field name="sale_ids"/>
+                            </div>
+
+                            <!-- Badges -->
+                            <div class="d-flex gap-2 flex-wrap mb-3">
+
+                                <span style="
+                                background:#4F8EF7;
+                                color:white;
+                                padding:4px 10px;
+                                border-radius:999px;
+                                font-size:12px;
+                                font-weight:600;
+                            ">
+                                    <i class="fa fa-plane me-1"/>
+                                    <field name="service_type"/>
+                                </span>
+
+                            </div>
+
+                            <!-- Action -->
+                            <div class="d-flex justify-content-end">
+
+                                <button type="object"
+                                        name="action_open_label"
+                                        style="
+                                        background:#4F8EF7;
+                                        color:white;
+                                        border:none;
+                                        padding:6px 14px;
+                                        border-radius:999px;
+                                        font-size:12px;
+                                        font-weight:700;
+                                    ">
+                                    <i class="fa fa-file-pdf-o me-1"/>
+                                    Shipping Label
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </t>
+
+                </templates>
+
+            </kanban>
+        </field>
+    </record>
+
+
+</odoo>

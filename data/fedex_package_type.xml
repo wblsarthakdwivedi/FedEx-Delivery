@@ -1,33 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo noupdate="1">
 
-    <record id="fedex_package_type_box" model="stock.package.type">
-        <field name="name">FedEx Box</field>
-        <field name="fedex_packaging_type">FEDEX_BOX</field>
+    <record id="fedex_package_type_your_packaging" model="stock.package.type">
+        <field name="name">Customer Packaging</field>
+        <field name="fedex_packaging_type">YOUR_PACKAGING</field>
+        <field name="packaging_length">300</field>
+        <field name="width">200</field>
+        <field name="height">150</field>
+        <field name="base_weight">5</field>
+        <field name="max_weight">150</field>
     </record>
 
     <record id="fedex_package_type_envelope" model="stock.package.type">
         <field name="name">FedEx Envelope</field>
         <field name="fedex_packaging_type">FEDEX_ENVELOPE</field>
+        <field name="packaging_length">381</field>
+        <field name="width">305</field>
+        <field name="height">10</field>
+        <field name="base_weight">0.5</field>
+        <field name="max_weight">1</field>
+    </record>
+
+    <record id="fedex_package_type_box" model="stock.package.type">
+        <field name="name">FedEx Box</field>
+        <field name="fedex_packaging_type">FEDEX_BOX</field>
+        <field name="packaging_length">305</field>
+        <field name="width">254</field>
+        <field name="height">102</field>
+        <field name="base_weight">2</field>
+        <field name="max_weight">20</field>
+    </record>
+
+    <record id="fedex_package_type_extra_small_box" model="stock.package.type">
+        <field name="name">FedEx Extra Small Box</field>
+        <field name="fedex_packaging_type">FEDEX_EXTRA_SMALL_BOX</field>
+        <field name="packaging_length">279</field>
+        <field name="width">32</field>
+        <field name="height">216</field>
+        <field name="base_weight">1</field>
+        <field name="max_weight">10</field>
+    </record>
+
+    <record id="fedex_package_type_small_box" model="stock.package.type">
+        <field name="name">FedEx Small Box</field>
+        <field name="fedex_packaging_type">FEDEX_SMALL_BOX</field>
+        <field name="packaging_length">305</field>
+        <field name="width">254</field>
+        <field name="height">38</field>
+        <field name="base_weight">2</field>
+        <field name="max_weight">20</field>
+    </record>
+
+    <record id="fedex_package_type_medium_box" model="stock.package.type">
+        <field name="name">FedEx Medium Box</field>
+        <field name="fedex_packaging_type">FEDEX_MEDIUM_BOX</field>
+        <field name="packaging_length">356</field>
+        <field name="width">279</field>
+        <field name="height">76</field>
+        <field name="base_weight">3</field>
+        <field name="max_weight">20</field>
+    </record>
+
+    <record id="fedex_package_type_large_box" model="stock.package.type">
+        <field name="name">FedEx Large Box</field>
+        <field name="fedex_packaging_type">FEDEX_LARGE_BOX</field>
+        <field name="packaging_length">432</field>
+        <field name="width">305</field>
+        <field name="height">102</field>
+        <field name="base_weight">5</field>
+        <field name="max_weight">30</field>
+    </record>
+
+    <record id="fedex_package_type_extra_large_box" model="stock.package.type">
+        <field name="name">FedEx Extra Large Box</field>
+        <field name="fedex_packaging_type">FEDEX_EXTRA_LARGE_BOX</field>
+        <field name="packaging_length">559</field>
+        <field name="width">381</field>
+        <field name="height">152</field>
+        <field name="base_weight">8</field>
+        <field name="max_weight">50</field>
+    </record>
+
+    <record id="fedex_package_type_10kg_box" model="stock.package.type">
+        <field name="name">FedEx 10kg Box</field>
+        <field name="fedex_packaging_type">FEDEX_10KG_BOX</field>
+        <field name="packaging_length">400</field>
+        <field name="width">310</field>
+        <field name="height">270</field>
+        <field name="base_weight">10</field>
+        <field name="max_weight">22</field>
+    </record>
+
+    <record id="fedex_package_type_25kg_box" model="stock.package.type">
+        <field name="name">FedEx 25kg Box</field>
+        <field name="fedex_packaging_type">FEDEX_25KG_BOX</field>
+        <field name="packaging_length">540</field>
+        <field name="width">420</field>
+        <field name="height">335</field>
+        <field name="base_weight">25</field>
+        <field name="max_weight">55</field>
     </record>
 
     <record id="fedex_package_type_pak" model="stock.package.type">
         <field name="name">FedEx Pak</field>
         <field name="fedex_packaging_type">FEDEX_PAK</field>
+        <field name="packaging_length">394</field>
+        <field name="width">305</field>
+        <field name="height">25</field>
+        <field name="base_weight">1</field>
+        <field name="max_weight">5</field>
     </record>
 
     <record id="fedex_package_type_tube" model="stock.package.type">
         <field name="name">FedEx Tube</field>
         <field name="fedex_packaging_type">FEDEX_TUBE</field>
+        <field name="packaging_length">965</field>
+        <field name="width">152</field>
+        <field name="height">152</field>
+        <field name="base_weight">2</field>
+        <field name="max_weight">20</field>
     </record>
-
-    <record id="fedex_package_type_your_packaging" model="stock.package.type">
-        <field name="name">Customer Packaging</field>
-        <field name="fedex_packaging_type">YOUR_PACKAGING</field>
-    </record>
-
-
-
 
 </odoo>
 

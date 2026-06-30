@@ -30,6 +30,7 @@
             "views/website_delivery_template.xml",
             "views/delivery_order_package_view.xml",
             "views/fedex_shipping_view.xml",
+            "views/fedex_label_view.xml",
             "views/fedex_menu.xml",
     ],
     'assets': {

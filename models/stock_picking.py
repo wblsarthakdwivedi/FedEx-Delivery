@@ -2,7 +2,7 @@ import base64
 import requests
 from odoo import fields, models, api
 from odoo.exceptions import UserError
-
+import json as pyjson
 
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
@@ -57,10 +57,10 @@ class StockPicking(models.Model):
                 "Please configure the FedEx Packaging Type on the selected Package Type."
             )
 
-        if not package.packaging_length or not package.width or not package.height:
-            raise UserError(
-                "Please configure the package dimensions."
-            )
+        # if not package.packaging_length or not package.width or not package.height:
+        #     raise UserError(
+        #         "Please configure the package dimensions."
+        #     )
 
         sender = self.company_id.partner_id
         recipient = self.partner_id
@@ -71,6 +71,12 @@ class StockPicking(models.Model):
             for move in self.move_ids
         )
         weight += package.base_weight or 0.1
+
+        weight_lb = round(weight * 2.20462, 2)
+
+        length = max(1, round(package.packaging_length / 25.4))
+        width = max(1, round(package.width / 25.4))
+        height = max(1, round(package.height / 25.4))
 
         payload = {
             "labelResponseOptions": "LABEL",
@@ -139,12 +145,12 @@ class StockPicking(models.Model):
                     {
                         "weight": {
                             "units": "LB",
-                            "value": weight,
+                            "value": weight_lb,
                         },
                         "dimensions": {
-                            "length": int(package.packaging_length),
-                            "width": int(package.width),
-                            "height": int(package.height),
+                            "length": int(length),
+                            "width": int(width),
+                            "height": int(height),
                             "units": "IN",
                         },
                     }
@@ -161,7 +167,9 @@ class StockPicking(models.Model):
 
         data = response.json()
 
-        print("Shipment Response:", data)
+
+        print("response: ", data)
+
 
         if response.status_code not in (200, 201):
             raise UserError(str(data))
@@ -200,19 +208,27 @@ class StockPicking(models.Model):
 
         shipping = self.env["fedex.shipping"].create({
             "name": f"SHIP-{self.sale_id.name or self.name}",
-            "sale_id": self.sale_id.id,
             "picking_id": self.id,
+            "sale_id": self.sale_id.id,
+            "partner_id": self.partner_id.id,
             "carrier_id": self.carrier_id.id,
             "package_type_id": self.package_type_id.id,
             "service_name": self.sale_id.fedex_service_name,
-            "service_code": self.sale_id.fedex_service_code,
             "shipping_charge": self.sale_id.fedex_rate_amount,
             "tracking_number": tracking,
-            "label_attachment_id": attachment.id,
             "state": "shipped",
         })
 
         print("Shipping Order Created:", shipping)
+
+        self.env["fedex.label"].create({
+            "picking_id": self.id,
+            "sale_ids": self.sale_id.id,
+            "tracking_number": tracking,
+            "service_type": self.sale_id.fedex_service_code,
+            "attachment_id": attachment.id,
+            "shipment_response": pyjson.dumps(data, indent=4),
+        })
 
         result = super().button_validate()
 

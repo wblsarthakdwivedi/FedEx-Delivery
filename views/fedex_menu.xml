@@ -2,9 +2,9 @@
 <odoo>
 
 
-<!--    <record id="action_dpd_dashboard" model="ir.actions.client">-->
-<!--        <field name="name">DPD Dashboard</field>-->
-<!--        <field name="tag">dpd_dashboard</field>-->
+<!--    <record id="action_fedex_dashboard" model="ir.actions.client">-->
+<!--        <field name="name">fedex Dashboard</field>-->
+<!--        <field name="tag">fedex_dashboard</field>-->
 <!--    </record>-->
 
 
@@ -12,6 +12,13 @@
         <field name="name">Shipping Orders</field>
         <field name="res_model">fedex.shipping</field>
         <field name="view_mode">list,form</field>
+    </record>
+    
+    <record id="action_fedex_labels" model="ir.actions.act_window">
+        <field name="name">Labels</field>
+        <field name="res_model">fedex.label</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('picking_id.carrier_id.delivery_type', '=', 'fedex')]</field>
     </record>
 
     <menuitem id="menu_root_fedex" name="FedEx Dashboard"/>
@@ -26,14 +33,26 @@
               name="Delivery Methods"
               parent="menu_root_fedex"
               action="delivery.action_delivery_carrier_form"
-              sequence="15"/>
+              sequence="10"/>
 
 
-    <menuitem id="menu_fedex_shipping_label"
+    <menuitem id="menu_fedex_shipping_order"
               name="Shipping Orders"
               parent="menu_root_fedex"
               action="action_fedex_shipping"
-              sequence="20"/>
+              sequence="15"/>
 
+    <menuitem id="menu_packaging"
+              name="Package Types"
+              parent="menu_root_fedex"
+              action="action_stock_package_type"
+              sequence="20"/>
+    
+    
+    <menuitem id="menu_fedex_shpping_label"
+              name="FedEx Label"
+              parent="menu_root_fedex"
+              action="action_fedex_labels"
+              sequence="25"/>
 
 </odoo>

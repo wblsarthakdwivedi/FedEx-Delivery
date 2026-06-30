@@ -25,7 +25,6 @@ class FedexShipping(models.Model):
     sale_id = fields.Many2one(
         "sale.order",
         string="Sales Order",
-        required=True,
         tracking=True,
     )
 
@@ -61,7 +60,7 @@ class FedexShipping(models.Model):
 
     service_name = fields.Char("FedEx Service")
 
-    service_code = fields.Char("Service Code")
+    # service_code = fields.Char("Service Code")
 
     shipping_charge = fields.Monetary(
         string="Shipping Charge",
@@ -81,23 +80,7 @@ class FedexShipping(models.Model):
         default=fields.Datetime.now,
     )
 
-    label_attachment_id = fields.Many2one(
-        "ir.attachment",
-        string="Shipping Label",
-    )
 
     weight = fields.Float()
 
     notes = fields.Text()
-
-    def action_open_label(self):
-        self.ensure_one()
-
-        if not self.label_attachment_id:
-            raise UserError("No shipping label found.")
-
-        return {
-            "type": "ir.actions.act_url",
-            "url": "/web/content/%s?download=false" % self.label_attachment_id.id,
-            "target": "new",
-        }
