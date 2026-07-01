@@ -28,19 +28,19 @@
                 <field name="fedex_packaging_type"/>
             </xpath>
 
-            <xpath expr="//field[@name='base_weight']/.." position="replace">
-                <div class="o_row" name="base_weight">
-                    <field name="base_weight"/>
-                    <span>LB</span>
-                </div>
-            </xpath>
+<!--            <xpath expr="//field[@name='base_weight']/.." position="replace">-->
+<!--                <div class="o_row" name="base_weight">-->
+<!--                    <field name="base_weight"/>-->
+<!--                    <span>LB</span>-->
+<!--                </div>-->
+<!--            </xpath>-->
 
-            <xpath expr="//field[@name='max_weight']/.." position="replace">
-                <div class="o_row" name="max_weight">
-                    <field name="max_weight"/>
-                    <span>LB</span>
-                </div>
-            </xpath>
+<!--            <xpath expr="//field[@name='max_weight']/.." position="replace">-->
+<!--                <div class="o_row" name="max_weight">-->
+<!--                    <field name="max_weight"/>-->
+<!--                    <span>LB</span>-->
+<!--                </div>-->
+<!--            </xpath>-->
 
         </field>
     </record>

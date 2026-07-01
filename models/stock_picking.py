@@ -4,6 +4,7 @@ from odoo import fields, models, api
 from odoo.exceptions import UserError
 import json as pyjson
 
+
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
@@ -78,6 +79,7 @@ class StockPicking(models.Model):
         width = max(1, round(package.width / 25.4))
         height = max(1, round(package.height / 25.4))
 
+        phone = recipient.phone or getattr(recipient, "mobile", "") or ""
         payload = {
             "labelResponseOptions": "LABEL",
             "accountNumber": {
@@ -158,6 +160,77 @@ class StockPicking(models.Model):
             },
         }
 
+        is_international = (
+                sender.country_id
+                and recipient.country_id
+                and sender.country_id.id != recipient.country_id.id
+        )
+
+        if is_international:
+
+            commodities = []
+            total_customs_value = 0.0
+
+            for move in self.move_ids:
+                product = move.product_id
+
+                qty = move.quantity or 1
+
+                unit_price = (
+                    move.sale_line_id.price_unit
+                    if move.sale_line_id
+                    else product.lst_price
+                )
+
+                customs_value = qty * unit_price
+                total_customs_value += customs_value
+
+                commodities.append({
+                    "description": product.name[:35],
+                    "countryOfManufacture": (
+                        sender.country_id.code
+                    ),
+                    "quantity": qty,
+                    "quantityUnits": "EA",
+
+                    "unitPrice": {
+                        "amount": round(unit_price, 2),
+                        "currency": self.company_id.currency_id.name,
+                    },
+
+                    "customsValue": {
+                        "amount": round(customs_value, 2),
+                        "currency": self.company_id.currency_id.name,
+                    },
+
+                    "weight": {
+                        "units": "LB",
+                        "value": max(product.weight * qty, 0.1),
+                    },
+
+                    "numberOfPieces": int(qty),
+                })
+
+            payload["requestedShipment"]["customsClearanceDetail"] = {
+
+                "dutiesPayment": {
+                    "paymentType": "SENDER",
+                },
+
+                "documentContent": "NON_DOCUMENTS",
+
+                "commercialInvoice": {
+                    "shipmentPurpose": "SOLD",
+                },
+
+                "customsValue": {
+                    "amount": round(total_customs_value, 2),
+                    "currency": self.company_id.currency_id.name,
+                },
+
+                "commodities": commodities,
+            }
+
         response = requests.post(
             url,
             json=payload,
@@ -167,9 +240,7 @@ class StockPicking(models.Model):
 
         data = response.json()
 
-
         print("response: ", data)
-
 
         if response.status_code not in (200, 201):
             raise UserError(str(data))

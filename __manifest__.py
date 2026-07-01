@@ -41,9 +41,9 @@
         ],
 
         'web.assets_backend': [
-            # "wbl_fedex_delivery/static/src/fedex_checkout.js",
-            # "wbl_dpd_shipping_integration/static/src/xml/dpd_dashboard.xml",
-            # "wbl_dpd_shipping_integration/static/src/css/dpd_dashboard.css",
+            "wbl_fedex_delivery/static/src/js/fedex_dashboard.js",
+            "wbl_fedex_delivery/static/src/xml/fedex_dashboard.xml",
+            "wbl_fedex_delivery/static/src/scss/fedex_dashboard.scss",
         ],
     },
     'images': ['static/description/banner.gif'],
