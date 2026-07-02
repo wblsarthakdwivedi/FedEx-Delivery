@@ -38,6 +38,24 @@ def geocode_address(street, city, state, country):
                 return float(data[0]['lat']), float(data[0]['lon'])
     except Exception as e:
         _logger.warning("Geocoding failed for %s: %s", query, e)
+        
+    # Fallback to city, state, country to target the correct city if specific street lookup fails
+    city_parts = [city, state, country]
+    city_query = ", ".join([p for p in city_parts if p])
+    if city_query and city_query != query:
+        url = f"https://nominatim.openstreetmap.org/search?q={urllib.parse.quote(city_query)}&format=json&limit=1"
+        req = urllib.request.Request(
+            url, 
+            headers={'User-Agent': 'OdooFedexDashboard/19.0 (support@weblyticlabs.com)'}
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=5) as response:
+                data = json.loads(response.read().decode())
+                if data:
+                    return float(data[0]['lat']), float(data[0]['lon'])
+        except Exception as e:
+            _logger.warning("Geocoding fallback failed for %s: %s", city_query, e)
+            
     return None
 
 class FedExDashboardController(http.Controller):
@@ -167,7 +185,8 @@ class FedExDashboardController(http.Controller):
         shipments_data = Shipping.search(domain)
         map_data = []
         for idx, s in enumerate(shipments_data):
-            partner = s.partner_id
+            # Target the shipping destination address partner rather than billing customer
+            partner = s.picking_id.partner_id or s.partner_id
             lat = 0.0
             lng = 0.0
             country = 'United States'
@@ -208,8 +227,9 @@ class FedExDashboardController(http.Controller):
             carrier = s.carrier_id or request.env['delivery.carrier'].search([('delivery_type', '=', 'fedex')], limit=1)
             account_number = carrier.fedex_account or '12345678'
             
-            jitter_lat = (idx * 0.17) % 1.5 - 0.75
-            jitter_lng = (idx * 0.23) % 1.5 - 0.75
+            # Reduce jitter so that pins display within the correct city bounds instead of jumping cities
+            jitter_lat = (idx * 0.003) % 0.01 - 0.005
+            jitter_lng = (idx * 0.004) % 0.01 - 0.005
             
             map_data.append({
                 'country': country,

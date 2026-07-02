@@ -10,7 +10,7 @@
 # You can`t redistribute it and/or modify it.
 ##################################################################################
 {
-    'name': 'FedEx Delivery',
+    'name': 'FedEx Shipping Integration',
     'version': '19.0.1.0.0',
     'description': """""",
     'summary': """""",

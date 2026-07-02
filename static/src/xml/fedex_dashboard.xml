@@ -11,24 +11,22 @@
                 <div class="fedex-logo-container bg-white text-center border-bottom py-4">
                     <span style="
                         color:#4D148C;
-                        font-family:'Arial Black', Arial, Helvetica, sans-serif;
+                        font-family:'Serif Black', Arial, Helvetica, sans-serif;
                         font-size:62px;
                         font-weight:900;
                         letter-spacing:-5px;
                         line-height:1;
                     ">
-                        Fed
-                    </span>
-                                    <span style="
+                        Fed</span>
+                    <span style="
                         color:#FF6600;
-                        font-family:'Arial Black', Arial, Helvetica, sans-serif;
+                        font-family:'Serif Black', Arial, Helvetica, sans-serif;
                         font-size:62px;
                         font-weight:900;
                         letter-spacing:-5px;
                         line-height:1;
                         margin-left:-6px;
-                    ">
-                        Ex
+                    ">Ex
                     </span>
                 </div>
 
@@ -297,7 +295,7 @@
                                                     <div class="timeline-icon">
                                                         <i t-att-class="'fa ' + activity.icon"></i>
                                                     </div>
-                                                    <div class="timeline-content">
+                                                    <div class="timeline-content">  
                                                         <div class="timeline-title" t-esc="activity.title"/>
                                                         <div class="timeline-desc" t-esc="activity.description"/>
                                                         <div class="font-size-xxs text-muted-light mt-1"><i class="fa fa-clock-o"></i>
